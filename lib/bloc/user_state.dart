@@ -15,6 +15,5 @@ final class UserLoaded extends UserState {
 
 final class UserError extends UserState {
   final String error;
-
   UserError(this.error);
 }
