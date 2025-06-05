@@ -1,4 +1,6 @@
-import 'package:bloc_implement/counter_cubit.dart';
+import 'package:bloc_implement/bloc/counter_bloc.dart';
+import 'package:bloc_implement/bloc/counter_event.dart';
+import 'package:bloc_implement/bloc/counter_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -38,10 +40,10 @@ class _MyHomePageState extends State<MyHomePage> {
             const Text(
               'You have pushed the button this many times:',
             ),
-            BlocBuilder<CounterCubit, int>(
-              builder: (context, value) {
+            BlocBuilder<CounterBloc, CounterState>(
+              builder: (context, state) {
                 return Text(
-                  '$value',
+                  '${state.number}',
                 );
               },
             ),
@@ -53,7 +55,8 @@ class _MyHomePageState extends State<MyHomePage> {
           FloatingActionButton(
             heroTag: 'decrement',
             onPressed: () {
-              context.read<CounterCubit>().decrement();
+              // context.read<CounterCubit>().decrement();
+              context.read<CounterBloc>().add(OnCounterDecrement());
             },
             child: const Icon(Icons.remove),
           ),
@@ -61,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
           FloatingActionButton(
             heroTag: 'increment',
             onPressed: () {
-              context.read<CounterCubit>().increment();
+              context.read<CounterBloc>().add(OnCounterIncrement());
             },
             child: const Icon(Icons.add),
           ),
