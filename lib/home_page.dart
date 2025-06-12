@@ -17,12 +17,23 @@ class HomePage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          BlocListener<Counter, int>(
+          BlocConsumer<Counter, int>(
             bloc: myCounter,
+            builder: (context, state) {
+              return Text(
+                "$state",
+                style: const TextStyle(
+                  fontSize: 50,
+                ),
+              );
+            },
             listener: (context, state) {
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
                   duration: Duration(milliseconds: 1000),
-                  content: Text("Dijalankan")));
+                  content: Text("Dijalankan"),
+                ),
+              );
             },
             listenWhen: (prev, current) {
               if (current % 2 == 1) {
@@ -31,16 +42,6 @@ class HomePage extends StatelessWidget {
                 return false;
               }
             },
-            child: BlocBuilder<Counter, int>(
-                bloc: myCounter,
-                builder: (context, state) {
-                  return Text(
-                    "$state",
-                    style: const TextStyle(
-                      fontSize: 50,
-                    ),
-                  );
-                }),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
