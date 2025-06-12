@@ -17,34 +17,31 @@ class HomePage extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          BlocBuilder<Counter, int>(
-              bloc: myCounter,
-              // buildWhen: (prev, current) {
-              //   if (current % 2 == 0) {
-              //     return true;
-              //   } else {
-              //     return false;
-              //   }
-              // },
-              builder: (context, state) {
-                return Text(
-                  "$state",
-                  style: const TextStyle(
-                    fontSize: 50,
-                  ),
-                );
-              }),
-          // StreamBuilder(
-          //     initialData: myCounter.init,
-          //     stream: myCounter.stream,
-          //     builder: (context, snapshot) {
-          //       return Text(
-          //         "${snapshot.data}",
-          //         style: const TextStyle(
-          //           fontSize: 50,
-          //         ),
-          //       );
-          //     }),
+          BlocListener<Counter, int>(
+            bloc: myCounter,
+            listener: (context, state) {
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  duration: Duration(milliseconds: 1000),
+                  content: Text("Dijalankan")));
+            },
+            listenWhen: (prev, current) {
+              if (current % 2 == 1) {
+                return true;
+              } else {
+                return false;
+              }
+            },
+            child: BlocBuilder<Counter, int>(
+                bloc: myCounter,
+                builder: (context, state) {
+                  return Text(
+                    "$state",
+                    style: const TextStyle(
+                      fontSize: 50,
+                    ),
+                  );
+                }),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
